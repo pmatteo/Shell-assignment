@@ -1,0 +1,69 @@
+#!/bin/bash
+
+# Carico le variabili "globali"
+source functions/config.sh;
+
+function menu { 
+    #add_mac_if_absent $1 $2
+    source functions/utils.sh
+
+    echo "$MENU"
+    echo -n "> "
+
+    read choice
+
+    # Ciclo finche l'utente non iserisce 4
+    while [[ $choice -ne 6 ]]; do
+        # Controllo la scelta e agisco in modo opportuno
+        case $choice in
+            # Visualizza MAC ADDRESS presenti nel file vbox
+            [1]) mac_vbox ;;
+            # Visualizza MAC ADDRESS già utilizzati
+            [2]) mac_used ;;
+            # Modifica i MAC ADDRESS
+            [3]) modify_mac ;;
+            # modifica con random
+            [4]) random_modify ;;
+            # ehco menu
+            [5]) echo "$MENU" ;;
+            # Scelta errata
+            *) other ;;
+        esac
+        echo
+        echo -n "> "
+        read choice
+    done
+
+    go_out
+}
+
+# Funzione che presi in input i file controlla che esistano. Nel caso il
+# controllo andasse male printa un messaggio di errore ed esce dal programma.
+# La funzione e' comoda perche' riutilizzabile con n file
+function check_file_exist {
+    local guard=0
+
+    for arg in $@; do
+        if [[ ! -e $arg ]]; then
+            guard=1;
+            echo "${bold}FILE NOT FOUND ERROR: ${normal}Il file '$arg' non esiste!";
+        fi
+    done
+
+    if [[ $guard -eq 1 ]]; then
+        exit 1
+    fi
+}
+
+# Controllo che il numero di args sia giusto
+if [[ $# -ne 2 ]]; then
+    echo "$ILLIGAL_ARGS_NUMB_ERR"
+    echo "$USAGE"
+    exit 1
+	
+# Ci sono args giusti
+else
+    # Controllo che i file esistano
+    check_file_exist $VBOX_FILE $DB_FILE
+    menu
+fi

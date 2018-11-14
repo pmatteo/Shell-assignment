@@ -1,0 +1,31 @@
+.\" Manpage for vboxMACman.
+.\" Contact piranmatteo@gmail.com to correct errors or typos.
+
+.TH VBOXMACMAN 7 \*(Dt "vboxMACman 1.0" "Miscellaneous"
+
+.SH NAME
+vboxMACman \- script bash per la modifica dei MAC Address presenti in un file .vbox.
+
+.SH SYNOPSIS
+.B vboxMACman  
+.I file.vbox DBFile
+
+.SH DESCRIPTION
+.B vboxMACman 
+aiuta a modificare i MAC Address presenti in un file di configurazione di VirtualBox,
+.I file.vbox 
+, il quale deve essere dato in input dal'utente insieme ad un file (normale PlainText) contenente i MAC Address già in uso nel sistema, 
+.IR DBFile . 
+.br
+Lo script permette di vedere i contenuto dei file passati come parametro e di sistituire le occorrenze di uno specifico MAC Address sia con uno inserito a mano dall'utente, sia con uno generato random dallo script. Il programma si occupa anche di validare l'input inserito e controllare se il nuovo indirizzo è tra quelli già in uso nel sistema ( e quindi contenuto in
+.I DBFile
+)
+
+.SH OPTIONS
+Nessuna opzione disponibile.
+
+.SH BUGS
+Nessun bug conosciuto.
+
+.SH AUTHOR
+Matteo Piran (piranmatteo@gmail.com)
